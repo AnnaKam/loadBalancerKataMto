@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.equalTo;
 import org.hamcrest.Matcher;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServerLoadBalancerTest {
@@ -23,19 +24,20 @@ public class ServerLoadBalancerTest {
 	}
 
 	private LoadPercentageMatcher hasLoadPercentageOf(double v) {
-		return null;
+		return new LoadPercentageMatcher(v);
 	}
 
 	private void balance(List<Server> servers, List<VMachine> vMachines) {
-
 	}
 
 	private List<VMachine> vmEmptyList() {
-		return null;
+		return new ArrayList<VMachine>();
 	}
 
 	private List<Server> serverList(Server server) {
-		return null;
+		List<Server> servers = new ArrayList<Server>();
+		servers.add(server);
+		return servers;
 	}
 
 	private Server create(ServerBuilder capacity) {
@@ -43,6 +45,6 @@ public class ServerLoadBalancerTest {
 	}
 
 	private ServerBuilder server() {
-		return null;
+		return new ServerBuilder();
 	}
 }
