@@ -14,14 +14,18 @@ public class LoadPercentageMatcher extends TypeSafeMatcher<Server> {
     }
 
     public void describeTo(Description description) {
-
+        description.appendText("Oczekiwano obciazenia ").appendValue(obciazenie).appendText(" a przyszło inne");
     }
 
     protected boolean matchesSafely(Server server) {
-        if(this.obciazenie == server.obciazenie){
+        if(this.obciazenie == server.getLoad()){
             return true;
         } else {
             return false;
         }
+    }
+
+    public static LoadPercentageMatcher hasLoadPercentageOf(double v) {
+        return new LoadPercentageMatcher(v);
     }
 }
