@@ -8,11 +8,21 @@ import org.hamcrest.TypeSafeMatcher;
  */
 public class HasVMachineMatcher extends TypeSafeMatcher<Server> {
 
-    public void describeTo(Description description) {
+    private VMachine vMachine;
 
+    public HasVMachineMatcher(VMachine vMachine) {
+        this.vMachine = vMachine;
+    }
+
+    public void describeTo(Description description) {
+        description.appendText("Serwer powinien miec: ").appendValue(vMachine).appendText(" a nie mial");
     }
 
     protected boolean matchesSafely(Server server) {
-        return false;
+        if(server.containsVm(this.vMachine)){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

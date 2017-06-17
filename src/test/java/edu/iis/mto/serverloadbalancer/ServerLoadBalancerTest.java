@@ -33,22 +33,26 @@ public class ServerLoadBalancerTest {
 	}
 
 	private HasVMachineMatcher hasVMachine(VMachine vMachine) {
-		return null;
+		return new HasVMachineMatcher(vMachine);
 	}
 
 	private List<VMachine> vMachineList(VMachine vMachine) {
-		return null;
+		List<VMachine> vMachines = new ArrayList<VMachine>();
+		vMachines.add(vMachine);
+		return vMachines;
 	}
 
 	private VMachine create(VMachineBuilder size) {
-		return null;
+		return size.buid();
 	}
 
 	private VMachineBuilder vMachnine() {
-		return null;
+		return new VMachineBuilder();
 	}
 
 	private void balance(List<Server> servers, List<VMachine> vMachines) {
+		ServerLoadBalancer serverLoadBalancer = new ServerLoadBalancer();
+		serverLoadBalancer.balance(servers, vMachines);
 	}
 
 	private List<VMachine> vmEmptyList() {
