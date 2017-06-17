@@ -55,10 +55,10 @@ public class ServerLoadBalancerTest {
 		assertThat(server, hasLoadPercentageOf(30.0d));
 		assertThat(server, hasVMachine(vMachine1));
 		assertThat(server, hasVMachine(vMachine2));
-		assertThat(server, hasMachineCountOf(server));
+		assertThat(server, hasMachineCountOf(2));
 	}
 
-	private VMNumberMatcher hasMachineCountOf(Server server) {
+	private VMNumberMatcher hasMachineCountOf(int number) {
 		return null;
 	}
 
