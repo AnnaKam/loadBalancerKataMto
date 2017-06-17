@@ -5,7 +5,6 @@ import static edu.iis.mto.serverloadbalancer.LoadPercentageMatcher.hasLoadPercen
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-import org.hamcrest.Matcher;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -22,6 +21,31 @@ public class ServerLoadBalancerTest {
 		Server server = create(server().capacity(10));
 		balance(serverList(server), vmEmptyList());
 		assertThat(server, hasLoadPercentageOf(0.0d));
+	}
+
+	@Test
+	public void serverWithOneMachineFor100Test() throws Exception {
+		Server server = create(server().capacity(10));
+		VMachine vMachine = create(vMachnine().size(10));
+		balance(serverList(server), vMachineList(vMachine));
+		assertThat(server, hasLoadPercentageOf(100.0d));
+		assertThat(server, hasVMachine(vMachine));
+	}
+
+	private HasVMachineMatcher hasVMachine(VMachine vMachine) {
+		return null;
+	}
+
+	private List<VMachine> vMachineList(VMachine vMachine) {
+		return null;
+	}
+
+	private VMachine create(VMachineBuilder size) {
+		return null;
+	}
+
+	private VMachineBuilder vMachnine() {
+		return null;
 	}
 
 	private void balance(List<Server> servers, List<VMachine> vMachines) {
