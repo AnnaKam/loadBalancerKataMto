@@ -14,6 +14,7 @@ import static edu.iis.mto.serverloadbalancer.VMNumberMatcher.hasMachineCountOf;
 import static edu.iis.mto.serverloadbalancer.VMachineBuilder.vMachnine;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 
 public class ServerLoadBalancerTest {
 	@Test
@@ -65,6 +66,14 @@ public class ServerLoadBalancerTest {
 		VMachine vMachine = create(vMachnine().size(3));
 		balance(paramsToList(lessSpaceServer, moreSpaceServer), paramsToList(vMachine));
 		assertThat(moreSpaceServer, hasVMachine(vMachine));
+	}
+
+	@Test
+	public void noSpaceForVMachineTest() throws Exception {
+		Server server = create(server().capacity(10).load(80.0d));
+		VMachine vMachine = create(vMachnine().size(4));
+		balance(paramsToList(server), paramsToList(vMachine));
+		assertThat(server, not(hasVMachine(vMachine)));
 	}
 
 	private void balance(List<Server> servers, List<VMachine> vMachines) {
