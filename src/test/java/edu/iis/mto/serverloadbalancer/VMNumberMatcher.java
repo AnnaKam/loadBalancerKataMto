@@ -11,14 +11,14 @@ public class VMNumberMatcher extends TypeSafeMatcher<Server> {
     }
 
     protected boolean matchesSafely(Server server) {
-        if(this.number == server.getvMachines().size()){
-            return true;
-        } else {
-            return false;
-        }
+        return this.number == server.getvMachines().size();
     }
 
     public void describeTo(Description description) {
         description.appendText("Serwer powinien miec ").appendValue(this.number).appendText(" maszyny, a nie ma");
+    }
+
+    public static VMNumberMatcher hasMachineCountOf(int number) {
+        return new VMNumberMatcher(number);
     }
 }

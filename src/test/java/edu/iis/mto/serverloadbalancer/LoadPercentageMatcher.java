@@ -18,11 +18,7 @@ public class LoadPercentageMatcher extends TypeSafeMatcher<Server> {
     }
 
     protected boolean matchesSafely(Server server) {
-        if(this.obciazenie == server.getLoad()){
-            return true;
-        } else {
-            return false;
-        }
+        return this.obciazenie == server.getLoad();
     }
 
     public static LoadPercentageMatcher hasLoadPercentageOf(double v) {

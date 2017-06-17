@@ -1,19 +1,19 @@
 package edu.iis.mto.serverloadbalancer;
 
 
-import static edu.iis.mto.serverloadbalancer.HasVMachineMatcher.hasVMachine;
-import static edu.iis.mto.serverloadbalancer.LoadPercentageMatcher.hasLoadPercentageOf;
-import static edu.iis.mto.serverloadbalancer.VMachineBuilder.vMachnine;
-import static edu.iis.mto.serverloadbalancer.ServerBuilder.server;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-
-import org.hamcrest.Matcher;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static edu.iis.mto.serverloadbalancer.HasVMachineMatcher.hasVMachine;
+import static edu.iis.mto.serverloadbalancer.LoadPercentageMatcher.hasLoadPercentageOf;
+import static edu.iis.mto.serverloadbalancer.ServerBuilder.server;
+import static edu.iis.mto.serverloadbalancer.VMNumberMatcher.hasMachineCountOf;
+import static edu.iis.mto.serverloadbalancer.VMachineBuilder.vMachnine;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class ServerLoadBalancerTest {
 	@Test
@@ -56,10 +56,6 @@ public class ServerLoadBalancerTest {
 		assertThat(server, hasVMachine(vMachine1));
 		assertThat(server, hasVMachine(vMachine2));
 		assertThat(server, hasMachineCountOf(2));
-	}
-
-	private VMNumberMatcher hasMachineCountOf(int number) {
-		return new VMNumberMatcher(number);
 	}
 
 	private List<VMachine> vMachineList(VMachine...vMachines) {
