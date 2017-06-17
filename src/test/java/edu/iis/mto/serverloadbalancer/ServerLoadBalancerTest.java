@@ -1,7 +1,10 @@
 package edu.iis.mto.serverloadbalancer;
 
 
+import static edu.iis.mto.serverloadbalancer.HasVMachineMatcher.hasVMachine;
 import static edu.iis.mto.serverloadbalancer.LoadPercentageMatcher.hasLoadPercentageOf;
+import static edu.iis.mto.serverloadbalancer.VMachineBuilder.vMachnine;
+import static edu.iis.mto.serverloadbalancer.ServerBuilder.server;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -32,22 +35,10 @@ public class ServerLoadBalancerTest {
 		assertThat(server, hasVMachine(vMachine));
 	}
 
-	private HasVMachineMatcher hasVMachine(VMachine vMachine) {
-		return new HasVMachineMatcher(vMachine);
-	}
-
 	private List<VMachine> vMachineList(VMachine vMachine) {
 		List<VMachine> vMachines = new ArrayList<VMachine>();
 		vMachines.add(vMachine);
 		return vMachines;
-	}
-
-	private VMachine create(VMachineBuilder size) {
-		return size.buid();
-	}
-
-	private VMachineBuilder vMachnine() {
-		return new VMachineBuilder();
 	}
 
 	private void balance(List<Server> servers, List<VMachine> vMachines) {
@@ -65,11 +56,7 @@ public class ServerLoadBalancerTest {
 		return servers;
 	}
 
-	private Server create(ServerBuilder capacity) {
-		return capacity.build();
-	}
-
-	private ServerBuilder server() {
-		return new ServerBuilder();
+	private <T> T create (Builder<T> param){
+		return param.build();
 	}
 }

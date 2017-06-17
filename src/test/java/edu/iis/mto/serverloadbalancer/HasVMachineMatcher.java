@@ -19,10 +19,9 @@ public class HasVMachineMatcher extends TypeSafeMatcher<Server> {
     }
 
     protected boolean matchesSafely(Server server) {
-        if(server.containsVm(this.vMachine)){
-            return true;
-        } else {
-            return false;
-        }
+        return server.containsVm(this.vMachine);
+    }
+    public static HasVMachineMatcher hasVMachine(VMachine vMachine) {
+        return new HasVMachineMatcher(vMachine);
     }
 }
