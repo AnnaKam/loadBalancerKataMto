@@ -26,10 +26,18 @@ public class Server {
 
     public void addMachine(VMachine vMachine) {
         vMachines.add(vMachine);
-        this.obciazenie = this.obciazenie + ((vMachine.getSize() / this.capacity) * 100);
+        this.obciazenie = this.obciazenie + ((vMachine.getSize() / this.capacity) * 100.0d);
     }
 
     public boolean containsVm(VMachine vMachine) {
         return vMachines.contains(vMachine);
+    }
+
+    public boolean hasEnoughSpace(VMachine vMachine) {
+        if(this.obciazenie + ((vMachine.getSize() / this.capacity) * 100.0d) <= 100.0d){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
