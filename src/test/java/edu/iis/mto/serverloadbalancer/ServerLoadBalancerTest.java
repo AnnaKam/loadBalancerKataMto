@@ -35,6 +35,15 @@ public class ServerLoadBalancerTest {
 		assertThat(server, hasVMachine(vMachine));
 	}
 
+	@Test
+	public void serverWithOneMachineFor10Test() throws Exception {
+		Server server = create(server().capacity(10));
+		VMachine vMachine = create(vMachnine().size(1));
+		balance(serverList(server), vMachineList(vMachine));
+		assertThat(server, hasLoadPercentageOf(10.0d));
+		assertThat(server, hasVMachine(vMachine));
+	}
+
 	private List<VMachine> vMachineList(VMachine vMachine) {
 		List<VMachine> vMachines = new ArrayList<VMachine>();
 		vMachines.add(vMachine);
