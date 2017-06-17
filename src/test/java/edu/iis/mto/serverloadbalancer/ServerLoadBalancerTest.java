@@ -58,6 +58,15 @@ public class ServerLoadBalancerTest {
 		assertThat(server, hasMachineCountOf(2));
 	}
 
+	@Test
+	public void twoServersOneMachineTest() throws Exception {
+		Server moreSpaceServer = create(server().capacity(10).load(10.0d));
+		Server lessSpaceServer = create(server().capacity(10).load(50.0d));
+		VMachine vMachine = create(vMachnine().size(3));
+		balance(serverList(lessSpaceServer, moreSpaceServer), vMachineList(vMachine));
+		assertThat(moreSpaceServer, hasVMachine(vMachine));
+	}
+
 	private List<VMachine> vMachineList(VMachine...vMachines) {
 		List<VMachine> vMachineList = new ArrayList<VMachine>();
 		Collections.addAll(vMachineList, vMachines);
@@ -73,10 +82,10 @@ public class ServerLoadBalancerTest {
 		return new ArrayList<VMachine>();
 	}
 
-	private List<Server> serverList(Server server) {
-		List<Server> servers = new ArrayList<Server>();
-		servers.add(server);
-		return servers;
+	private List<Server> serverList(Server...servers) {
+		List<Server> serverList = new ArrayList<Server>();
+		Collections.addAll(serverList, servers);
+		return serverList;
 	}
 
 	private <T> T create (Builder<T> param){
