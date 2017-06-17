@@ -9,6 +9,11 @@ import java.util.List;
 public class Server {
     private int capacity;
     private double obciazenie;
+
+    public List<VMachine> getvMachines() {
+        return vMachines;
+    }
+
     private List<VMachine> vMachines = new ArrayList<VMachine>();
 
     public Server(int capacity) {

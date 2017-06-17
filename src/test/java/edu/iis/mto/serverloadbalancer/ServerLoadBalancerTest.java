@@ -59,7 +59,7 @@ public class ServerLoadBalancerTest {
 	}
 
 	private VMNumberMatcher hasMachineCountOf(int number) {
-		return null;
+		return new VMNumberMatcher(number);
 	}
 
 	private List<VMachine> vMachineList(VMachine...vMachines) {
