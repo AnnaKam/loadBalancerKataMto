@@ -24,7 +24,7 @@ public class ServerLoadBalancerTest {
 	@Test
 	public void serverWithoutMachineTest() throws Exception {
 		Server server = create(server().capacity(10));
-		balance(serverList(server), vmEmptyList());
+		balance(paramsToList(server), vmEmptyList());
 		assertThat(server, hasLoadPercentageOf(0.0d));
 	}
 
@@ -32,7 +32,7 @@ public class ServerLoadBalancerTest {
 	public void serverWithOneMachineFor100Test() throws Exception {
 		Server server = create(server().capacity(10));
 		VMachine vMachine = create(vMachnine().size(10));
-		balance(serverList(server), vMachineList(vMachine));
+		balance(paramsToList(server), paramsToList(vMachine));
 		assertThat(server, hasLoadPercentageOf(100.0d));
 		assertThat(server, hasVMachine(vMachine));
 	}
@@ -41,7 +41,7 @@ public class ServerLoadBalancerTest {
 	public void serverWithOneMachineFor10Test() throws Exception {
 		Server server = create(server().capacity(10));
 		VMachine vMachine = create(vMachnine().size(1));
-		balance(serverList(server), vMachineList(vMachine));
+		balance(paramsToList(server), paramsToList(vMachine));
 		assertThat(server, hasLoadPercentageOf(10.0d));
 		assertThat(server, hasVMachine(vMachine));
 	}
@@ -51,7 +51,7 @@ public class ServerLoadBalancerTest {
 		Server server = create(server().capacity(10));
 		VMachine vMachine1 = create(vMachnine().size(1));
 		VMachine vMachine2 = create(vMachnine().size(2));
-		balance(serverList(server), vMachineList(vMachine1, vMachine2));
+		balance(paramsToList(server), paramsToList(vMachine1, vMachine2));
 		assertThat(server, hasLoadPercentageOf(30.0d));
 		assertThat(server, hasVMachine(vMachine1));
 		assertThat(server, hasVMachine(vMachine2));
@@ -63,14 +63,8 @@ public class ServerLoadBalancerTest {
 		Server moreSpaceServer = create(server().capacity(10).load(10.0d));
 		Server lessSpaceServer = create(server().capacity(10).load(50.0d));
 		VMachine vMachine = create(vMachnine().size(3));
-		balance(serverList(lessSpaceServer, moreSpaceServer), vMachineList(vMachine));
+		balance(paramsToList(lessSpaceServer, moreSpaceServer), paramsToList(vMachine));
 		assertThat(moreSpaceServer, hasVMachine(vMachine));
-	}
-
-	private List<VMachine> vMachineList(VMachine...vMachines) {
-		List<VMachine> vMachineList = new ArrayList<VMachine>();
-		Collections.addAll(vMachineList, vMachines);
-		return vMachineList;
 	}
 
 	private void balance(List<Server> servers, List<VMachine> vMachines) {
@@ -82,10 +76,10 @@ public class ServerLoadBalancerTest {
 		return new ArrayList<VMachine>();
 	}
 
-	private List<Server> serverList(Server...servers) {
-		List<Server> serverList = new ArrayList<Server>();
-		Collections.addAll(serverList, servers);
-		return serverList;
+	private <T> List<T> paramsToList(T...params) {
+		List<T> list = new ArrayList<T>();
+		Collections.addAll(list, params);
+		return list;
 	}
 
 	private <T> T create (Builder<T> param){
