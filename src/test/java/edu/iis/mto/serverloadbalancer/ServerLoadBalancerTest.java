@@ -8,9 +8,11 @@ import static edu.iis.mto.serverloadbalancer.ServerBuilder.server;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import org.hamcrest.Matcher;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ServerLoadBalancerTest {
@@ -44,10 +46,26 @@ public class ServerLoadBalancerTest {
 		assertThat(server, hasVMachine(vMachine));
 	}
 
-	private List<VMachine> vMachineList(VMachine vMachine) {
-		List<VMachine> vMachines = new ArrayList<VMachine>();
-		vMachines.add(vMachine);
-		return vMachines;
+	@Test
+	public void serverWithTwoMachinesTest() throws Exception {
+		Server server = create(server().capacity(10));
+		VMachine vMachine1 = create(vMachnine().size(1));
+		VMachine vMachine2 = create(vMachnine().size(2));
+		balance(serverList(server), vMachineList(vMachine1, vMachine2));
+		assertThat(server, hasLoadPercentageOf(30.0d));
+		assertThat(server, hasVMachine(vMachine1));
+		assertThat(server, hasVMachine(vMachine2));
+		assertThat(server, hasMachineCountOf(server));
+	}
+
+	private VMNumberMatcher hasMachineCountOf(Server server) {
+		return null;
+	}
+
+	private List<VMachine> vMachineList(VMachine...vMachines) {
+		List<VMachine> vMachineList = new ArrayList<VMachine>();
+		Collections.addAll(vMachineList, vMachines);
+		return vMachineList;
 	}
 
 	private void balance(List<Server> servers, List<VMachine> vMachines) {
