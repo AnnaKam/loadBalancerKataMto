@@ -34,10 +34,6 @@ public class Server {
     }
 
     public boolean hasEnoughSpace(VMachine vMachine) {
-        if(this.obciazenie + ((vMachine.getSize() / this.capacity) * 100.0d) <= 100.0d){
-            return true;
-        } else {
-            return false;
-        }
+        return this.obciazenie + ((vMachine.getSize() / this.capacity) * 100.0d) <= 100.0d;
     }
 }
