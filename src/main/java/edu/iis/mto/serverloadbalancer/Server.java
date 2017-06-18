@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Server {
     private int capacity;
-    private double obciazenie;
+    private double load;
 
     public List<VMachine> getvMachines() {
         return vMachines;
@@ -21,12 +21,12 @@ public class Server {
     }
 
     public double getLoad() {
-        return obciazenie;
+        return load;
     }
 
     public void addMachine(VMachine vMachine) {
         vMachines.add(vMachine);
-        this.obciazenie = this.obciazenie + ((vMachine.getSize() / this.capacity) * 100.0d);
+        this.load = this.load + getVMachineLoad(vMachine);
     }
 
     public boolean containsVm(VMachine vMachine) {
@@ -34,6 +34,10 @@ public class Server {
     }
 
     public boolean hasEnoughSpace(VMachine vMachine) {
-        return this.obciazenie + ((vMachine.getSize() / this.capacity) * 100.0d) <= 100.0d;
+        return this.load + getVMachineLoad(vMachine) <= 100.0d;
+    }
+
+    private double getVMachineLoad (VMachine vMachine) {
+        return (vMachine.getSize() / this.capacity) * 100.0d;
     }
 }

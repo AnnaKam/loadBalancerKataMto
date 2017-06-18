@@ -6,10 +6,14 @@ import java.util.List;
 public class ServerLoadBalancer {
     public void balance(List<Server> servers, List<VMachine> vMachines) {
         for (VMachine vMachine: vMachines) {
-            Server chosenServer = findTheLeastLoaded(findServersOfProperSize(servers, vMachine));
-            if(chosenServer != null){
-                chosenServer.addMachine(vMachine);
-            }
+            addVMachinetoProperServer(servers, vMachine);
+        }
+    }
+
+    private void addVMachinetoProperServer (List<Server> servers, VMachine vMachine){
+        Server chosenServer = findTheLeastLoaded(findServersOfProperSize(servers, vMachine));
+        if(chosenServer != null){
+            chosenServer.addMachine(vMachine);
         }
     }
 
