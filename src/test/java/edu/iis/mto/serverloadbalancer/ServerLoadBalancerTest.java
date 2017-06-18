@@ -76,6 +76,25 @@ public class ServerLoadBalancerTest {
 		assertThat(server, not(hasVMachine(vMachine)));
 	}
 
+	@Test
+	public void serversAndVMachinesCombinationTest() throws Exception {
+		Server server1 = create(server().capacity(4));
+		Server server2 = create(server().capacity(10));
+
+		VMachine vMachine1 = create(vMachnine().size(5));
+		VMachine vMachine2 = create(vMachnine().size(1));
+		VMachine vMachine3 = create(vMachnine().size(2));
+
+		balance(paramsToList(server1, server2), paramsToList(vMachine1, vMachine2, vMachine3));
+
+		assertThat(server1, hasVMachine(vMachine2));
+		assertThat(server2, hasVMachine(vMachine1));
+		assertThat(server1, hasVMachine(vMachine3));
+
+		assertThat(server2, hasLoadPercentageOf(50.0d));
+		assertThat(server1, hasLoadPercentageOf(75.0d));
+	}
+
 	private void balance(List<Server> servers, List<VMachine> vMachines) {
 		ServerLoadBalancer serverLoadBalancer = new ServerLoadBalancer();
 		serverLoadBalancer.balance(servers, vMachines);
